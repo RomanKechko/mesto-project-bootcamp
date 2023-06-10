@@ -1,4 +1,5 @@
 .popup__name {
+  margin: 46px 36px 0;
   border: 0;
   border-bottom: 1px solid #000000;
   opacity: 0.2;
@@ -13,6 +14,7 @@
 }
 @media (max-width: 565px) {
   .popup__name {
+    margin: 75px 22px 0;
     padding-bottom: 8px;
   }
 }

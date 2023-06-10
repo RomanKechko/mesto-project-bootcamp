@@ -1,5 +1,5 @@
 .popup__description {
-  margin-top: 30px;
+  margin: 30px 36px 0;
   border: 0;
   border-bottom: 1px solid #000000;
   opacity: 0.2;
@@ -12,4 +12,11 @@
 
 .popup__description:focus {
   outline: none;
+}
+
+@media (max-width: 565px) {
+  .popup__description {
+    margin: 30px 22px 0;
+    padding-bottom: 8px;
+  }
 }
