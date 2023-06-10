@@ -21,11 +21,12 @@
             alt="Жак-Ив Кусто"
             class="profile__avatar"
           />
-          <div class="profile__profile-info">
-            <h1 class="profile__name"></h1>
-            <p class="profile__description">Жак-Ив Кусто</p>
-            <div class="profile__edit-button">Исследователь океана</div>
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button"></button>
+            <p class="profile__description">Исследователь океана</p>
           </div>
+
           <button class="profile__add-button"></button>
         </section>
 
@@ -36,7 +37,7 @@
               alt="Карачаевск"
               class="elenet__photo"
             />
-            <div class="element_container">
+            <div class="element__container">
               <h2 class="element__name">Карачаевск</h2>
               <div class="element__heart"></div>
             </div>
@@ -47,7 +48,7 @@
               alt="Гора Эльбрус"
               class="elenet__photo"
             />
-            <div class="element_container">
+            <div class="element__container">
               <h2 class="element__name">Гора Эльбрус</h2>
               <div class="element__heart"></div>
             </div>
@@ -58,41 +59,41 @@
               alt="Домбай"
               class="elenet__photo"
             />
-            <div class="element_container">
+            <div class="element__container">
               <h2 class="element__name">Домбай</h2>
               <div class="element__heart"></div>
             </div>
           </article>
           <article class="element">
             <img
-              src="./images/elements/kolsky.jpg"
-              alt="Кольский"
+              src="./images/elements/mount_elbrus.jpg"
+              alt="Гора Эльбрус"
               class="elenet__photo"
             />
-            <div class="element_container">
-              <h2 class="element__name">Кольский</h2>
+            <div class="element__container">
+              <h2 class="element__name">Гора Эльбрус</h2>
               <div class="element__heart"></div>
             </div>
           </article>
           <article class="element">
             <img
-              src="./images/elements/altai.jpg"
-              alt="Алтай"
+              src="./images/elements/dombai.jpg"
+              alt="Домбай"
               class="elenet__photo"
             />
-            <div class="element_container">
-              <h2 class="element__name">Алтай</h2>
+            <div class="element__container">
+              <h2 class="element__name">Домбай</h2>
               <div class="element__heart"></div>
             </div>
           </article>
           <article class="element">
             <img
-              src="./images/elements/karelia.jpg"
-              alt="Карелия"
+              src="./images/elements/karachaevsk.jpg"
+              alt="Карачаево-Черкессия"
               class="elenet__photo"
             />
-            <div class="element_container">
-              <h2 class="element__name">Карелия</h2>
+            <div class="element__container">
+              <h2 class="element__name">Карачаево-Черкессия</h2>
               <div class="element__heart"></div>
             </div>
           </article>
@@ -102,6 +103,24 @@
       <footer class="footer">
         <p class="footer__copyright" lang="en">&copy; 2020 Mesto Russia</p>
       </footer>
+
+      <section class="popup popup_opened">
+        <from class="popup__container">
+          <h2 class="popup__edit">Редактировать профиль</h2>
+          <fieldset class="popup__input-container">
+            <input type="text" placeholder="Жак-Ив Кусто" class="popup__name" />
+
+            <input
+              type="text"
+              placeholder="Исследователь океана "
+              class="popup__description"
+            />
+
+            <button class="popup__save">Сохранить</button>
+          </fieldset>
+          <div class="popup__close"></div>
+        </from>
+      </section>
     </div>
   </body>
 </html>

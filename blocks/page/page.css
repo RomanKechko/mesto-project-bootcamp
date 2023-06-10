@@ -8,3 +8,15 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
 }
+
+@media (max-width: 1279px) {
+  .page {
+    padding: 0 40px 0 40px;
+  }
+}
+
+@media (max-width: 565px) {
+  .page {
+    padding: 0;
+  }
+}
