@@ -1,11 +1,31 @@
 .header {
+  position: relative;
   margin: 0 auto;
   padding-top: 45px;
   max-width: 880px;
 }
+.header::after {
+  content: "";
+  position: absolute;
+  top: 119px;
+  left: 0;
+  width: 880px;
+  border-bottom: 1px solid #545454;
+  opacity: 0.7;
+}
 
+@media (max-width: 959px) {
+  .header::after {
+    width: 100vw;
+    left: -40px;
+  }
+}
 @media (max-width: 565px) {
   .header {
     padding-top: 28px;
+  }
+  .header::after {
+    top: 84px;
+    left: 0;
   }
 }

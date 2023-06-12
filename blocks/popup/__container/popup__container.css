@@ -1,9 +1,7 @@
 .popup__container {
+  position: relative;
   width: 430px;
-  position: fixed;
-  top: 195px;
-  left: 50%;
-  transform: translate(-50%);
+  height: 330px;
   background-color: #ffffff;
   border-radius: 10px;
   display: flex;
@@ -13,6 +11,7 @@
 @media (max-width: 565px) {
   .popup__container {
     width: 282px;
-    top: 123px;
+    height: 322px;
+    top: -29px;
   }
 }

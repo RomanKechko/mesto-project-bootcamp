@@ -11,7 +11,6 @@
     <div class="page">
       <header class="header">
         <div class="header__logo"></div>
-        <div class="header__line"></div>
       </header>
 
       <main class="content">
@@ -23,11 +22,13 @@
           />
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button"></button>
+            <button type="button" class="profile__edit-button"></button>
             <p class="profile__description">Исследователь океана</p>
           </div>
 
-          <button class="profile__add-button"></button>
+          <button type="button" class="profile__add-button">
+            <span class="profile__logo-plus-icon"></span>
+          </button>
         </section>
 
         <section class="elements">
@@ -39,7 +40,7 @@
             />
             <div class="element__container">
               <h2 class="element__name">Карачаевск</h2>
-              <div class="element__heart"></div>
+              <button type="button" class="element__icon-heart"></button>
             </div>
           </article>
           <article class="element">
@@ -50,7 +51,7 @@
             />
             <div class="element__container">
               <h2 class="element__name">Гора Эльбрус</h2>
-              <div class="element__heart"></div>
+              <button type="button" class="element__icon-heart"></button>
             </div>
           </article>
           <article class="element">
@@ -61,7 +62,7 @@
             />
             <div class="element__container">
               <h2 class="element__name">Домбай</h2>
-              <div class="element__heart"></div>
+              <button type="button" class="element__icon-heart"></button>
             </div>
           </article>
           <article class="element">
@@ -72,7 +73,7 @@
             />
             <div class="element__container">
               <h2 class="element__name">Гора Эльбрус</h2>
-              <div class="element__heart"></div>
+              <button type="button" class="element__icon-heart"></button>
             </div>
           </article>
           <article class="element">
@@ -83,7 +84,7 @@
             />
             <div class="element__container">
               <h2 class="element__name">Домбай</h2>
-              <div class="element__heart"></div>
+              <button type="button" class="element__icon-heart"></button>
             </div>
           </article>
           <article class="element">
@@ -94,7 +95,7 @@
             />
             <div class="element__container">
               <h2 class="element__name">Карачаево-Черкессия</h2>
-              <div class="element__heart"></div>
+              <button type="button" class="element__icon-heart"></button>
             </div>
           </article>
         </section>
@@ -104,23 +105,30 @@
         <p class="footer__copyright" lang="en">&copy; 2020 Mesto Russia</p>
       </footer>
 
-      <section class="popup popup_opened">
-        <div class="popup__container">
+      <div class="popup">
+        <form name="popup" class="popup__container">
           <h2 class="popup__edit">Редактировать профиль</h2>
-          <!-- <div class="popup__input-container"> -->
-          <input type="text" placeholder="Жак-Ив Кусто" class="popup__name" />
+
+          <input
+            type="text"
+            name="profile-filler"
+            placeholder="Жак-Ив Кусто"
+            class="popup__filler"
+          />
 
           <input
             type="text"
             placeholder="Исследователь океана "
-            class="popup__description"
+            class="popup__filler"
           />
 
-          <button class="popup__save">Сохранить</button>
-          <!-- </div> -->
-          <div class="popup__close"></div>
-        </div>
-      </section>
+          <button type="button" name="profile-name" class="popup__save">
+            Сохранить
+          </button>
+
+          <button class="popup__close"></button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

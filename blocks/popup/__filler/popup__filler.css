@@ -1,21 +1,23 @@
-.popup__description {
+.popup__filler {
   margin: 30px 36px 0;
   border: 0;
-  border-bottom: 1px solid #000000;
-  opacity: 0.2;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #000000;
-  padding-bottom: 8px;
+  padding: 0 0 8px 0;
 }
 
-.popup__description:focus {
+.popup__filler:first-of-type {
+  margin-top: 0;
+}
+
+.popup__filler:focus {
   outline: none;
 }
 
 @media (max-width: 565px) {
-  .popup__description {
+  .popup__filler {
     margin: 30px 22px 0;
     padding-bottom: 8px;
   }

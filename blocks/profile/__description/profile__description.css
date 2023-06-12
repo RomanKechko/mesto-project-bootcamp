@@ -1,9 +1,13 @@
 .profile__description {
+  max-width: 288px;
   margin: 0;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   color: #ffffff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media (max-width: 565px) {

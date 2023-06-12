@@ -2,11 +2,13 @@
   position: absolute;
   width: 32px;
   height: 32px;
-  background-image: url(../../../images/popup/close_icon.png);
+  background-image: url(../../../images/popup/close_icon.svg);
   background-repeat: no-repeat;
   background-size: cover;
   top: -40px;
-  left: 438px;
+  right: -40px;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
 }
 
@@ -19,6 +21,6 @@
     width: 20px;
     height: 20px;
     top: -36px;
-    left: 262px;
+    right: 0;
   }
 }
