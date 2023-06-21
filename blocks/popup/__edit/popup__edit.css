@@ -8,7 +8,7 @@
 
 @media (max-width: 565px) {
   .popup__edit {
-    margin: 25px auto 75px;
+    margin: 25px 0 75px 22px;
     max-width: 238px;
     font-size: 18px;
     line-height: 22px;

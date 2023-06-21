@@ -8,6 +8,11 @@
   padding: 0 0 8px 0;
 }
 
+.popup__filler:focus {
+  border: 3px solid rgb(30, 184, 205);
+  border-radius: 4px;
+}
+
 .popup__filler:first-of-type {
   margin-top: 0;
 }

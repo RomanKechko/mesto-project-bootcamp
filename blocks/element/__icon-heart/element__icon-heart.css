@@ -13,7 +13,3 @@
 .element__icon-heart:hover {
   opacity: 0.5;
 }
-
-.element__icon-heart:active {
-  background-image: url(../../../images/elements/heart_active.svg);
-}

@@ -1,0 +1,16 @@
+.element__urn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-image: url(../../../images/elements/urn.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 18px;
+  height: 19px;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+.element__urn:hover {
+  opacity: 0.6;
+}
