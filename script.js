@@ -1,7 +1,10 @@
 const page = document.querySelector(".page");
 const profileEditButton = page.querySelector(".profile__edit-button");
-const popupCloseProfile = page.querySelector(".popup__close-profile");
+
+/* Пока не использую */
 const popupSaveProfile = page.querySelector(".popup__save-profile");
+/* Пока не использую */
+
 const content = page.querySelector(".content");
 const popupProfile = page.querySelector(".popup-profile");
 const popupFormProfile = page.querySelector(".popup__form-profile");
@@ -16,8 +19,10 @@ const popupCard = page.querySelector(".popup-card");
 const popupFormСard = page.querySelector(".popup__form-card");
 const popupLinkCard = page.querySelector(".popup__link-card");
 const popupNameCard = page.querySelector(".popup__name-card");
+/* Пока не использую */
 const popupSaveCard = page.querySelector(".popup__save-card");
-const popupCloseCard = page.querySelector(".popup__close-card");
+/* Пока не использую */
+
 const elementPhoto = page.querySelector(".element__photo");
 const elementName = page.querySelector(".element__name");
 const elementTemplate = page.querySelector(".element-template");
@@ -28,10 +33,10 @@ console.log(elements);
 const popupPhoto = page.querySelector(".popup__photo");
 const popupNamePhoto = page.querySelector(".popup__name-photo");
 const popupMapEnlargement = page.querySelector(".popup-map-enlargement");
-const popupCloseСontainerPhoto = page.querySelector(
-  ".popup__close-container-photo"
-);
 /* Конец модального окна "Увеличение карточки" */
+
+const closeButtons = document.querySelectorAll(".popup__close");
+/* ЗАкрыть все модалки */
 
 /* Функции открыть/закрыть модалку */
 function openPopup(popup) {
@@ -43,23 +48,18 @@ function closePopup(popup) {
 }
 /* Функции открыть/закрыть модалку */
 
-/* Закрыть увеличенную карточку */
-popupCloseСontainerPhoto.addEventListener("click", () =>
-  closePopup(popupMapEnlargement)
-);
-/* Закрыть увеличенную карточку */
+/* Кнопка "закрыть модалку" для всех vjlfkmys[ jrjy] */
+closeButtons.forEach((button) => {
+  const popup = button.closest(".popup");
+  button.addEventListener("click", () => closePopup(popup));
+});
+/* Кнопка "закрыть модалку" для всех крестиков*/
 
-/* Сохранить/закрыть модальное окно профиля*/
-popupCloseProfile.addEventListener("click", () => closePopup(popupProfile));
-/* Сохранить/закрыть модальное окно профиля*/
-
-/* Сохранить/закрыть модальное окно карточек*/
+/* Открыть модальное окно карточек*/
 profileAddButton.addEventListener("click", () => openPopup(popupCard));
-popupCloseCard.addEventListener("click", () => closePopup(popupCard));
-/* Сохранить/закрыть модальное окно карточек*/
+/* Открыть модальное окно карточек*/
 
 /* Начало модального окна профиля */
-
 /* Открываем модалку */
 profileEditButton.addEventListener("click", () => {
   openPopup(popupProfile);
@@ -85,18 +85,16 @@ function editProdile(evt) {
 
 popupFormProfile.addEventListener("submit", editProdile);
 /* Форма */
-
 /* Конец модального окна профиля */
 
 /* Начало модального окна новой карточки */
-
 /* Функция с template */
 function createCard(nameInput, linkInput) {
   const finiteElement = elementTemplate.content;
   const cardElement = finiteElement.querySelector(".element").cloneNode(true);
   cardElement.querySelector(".element__name").textContent = nameInput;
   cardElement.querySelector(".element__photo").src = linkInput;
-  cardElement.querySelector(".element__photo").src = linkInput;
+  cardElement.querySelector(".element__photo").alt = nameInput;
   /* Функция с template */
 
   /* Кнопка лайк */
@@ -119,6 +117,7 @@ function createCard(nameInput, linkInput) {
   cardElement.querySelector(".element__photo").addEventListener("click", () => {
     openPopup(popupMapEnlargement);
     popupPhoto.src = linkInput;
+    popupPhoto.alt = nameInput;
     popupNamePhoto.textContent = nameInput;
   });
   /* Увеличение карточки */
@@ -129,14 +128,12 @@ function createCard(nameInput, linkInput) {
 function addCard(evt) {
   evt.preventDefault();
   elements.prepend(createCard(popupNameCard.value, popupLinkCard.value));
-  popupNameCard.value = "";
-  popupLinkCard.value = "";
+  evt.target.reset();
   closePopup(popupCard);
 }
 
 popupFormСard.addEventListener("submit", addCard);
 /* Форма карточки */
-
 /* Конец модального окна новой карточки */
 
 /* Начало 6ти готовых карточек */
