@@ -1,11 +1,12 @@
 .popup__filler {
-  margin: 30px 36px 0;
+  margin: 6px 36px 0;
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   padding: 0 0 8px 0;
+  outline: none;
 }
 
 .popup__filler:focus {
@@ -17,13 +18,9 @@
   margin-top: 0;
 }
 
-.popup__filler:focus {
-  outline: none;
-}
-
 @media (max-width: 565px) {
   .popup__filler {
-    margin: 30px 22px 0;
+    margin: 13px 22px 0;
     padding-bottom: 8px;
   }
 }
