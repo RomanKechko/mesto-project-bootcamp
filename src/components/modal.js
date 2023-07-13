@@ -1,14 +1,30 @@
-const popup = Array.from(document.querySelectorAll(".popup"));
-popup.forEach((element) => {
-  element.addEventListener("click", (evt) => {
-    evt.target.classList.remove("popup_opened");
-  });
+/* Функции открыть/закрыть модалку */
+function openPopup(popup) {
+  popup.classList.add("popup_opened");
+  document.addEventListener("keydown", closeByEsc);
+}
 
-  document.addEventListener("keydown", function (evt) {
-    if (element.classList.contains("popup_opened") && evt.key === "Escape") {
-      element.classList.remove("popup_opened");
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
+  document.addEventListener("keydown", closeByEsc);
+}
+/* Функции открыть/закрыть модалку */
+
+/* Закрыть на "Esc" */
+function closeByEsc(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    if (openedPopup !== null) {
+      closePopup(openedPopup);
     }
-  });
-});
+  }
+}
+/* Закрыть на "Esc" */
 
-export { popup };
+/* Блокировка кнкопки схранить в попап, где не введены данные */
+function buttonDisabled(button) {
+  button.classList.add("popup__save_inactive");
+  button.setAttribute("disabled", true);
+}
+/* Блокировка кнкопки схранить в попап, где не введены данные */
+export { openPopup, closePopup, buttonDisabled };

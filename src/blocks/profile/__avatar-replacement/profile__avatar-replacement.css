@@ -1,0 +1,7 @@
+.profile__avatar-replacement {
+  background-image: url(../../../images/profile/add_avatar.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 26px;
+  height: 26px;
+}

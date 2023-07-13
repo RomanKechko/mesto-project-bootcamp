@@ -15,15 +15,16 @@
 
       <main class="content">
         <section class="profile">
-          <img
-            src="<%=require('./images/profile/jacques_yves_cousteau.jpg')%>"
-            alt="Жак-Ив Кусто"
-            class="profile__avatar"
-          />
+          <div class="profile__avatar">
+            <img src="" alt="Фото профиля" class="profile__url" />
+            <div class="profile__avatar-replacement_hidden">
+              <span class="profile__avatar-replacement"></span>
+            </div>
+          </div>
           <div class="profile__info">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button type="button" class="profile__edit-button"></button>
-            <p class="profile__description">Исследователь океана</p>
+            <p class="profile__description"></p>
           </div>
 
           <button type="button" class="profile__add-button">
@@ -37,6 +38,30 @@
       <footer class="footer">
         <p class="footer__copyright" lang="en">&copy; 2020 Mesto Russia</p>
       </footer>
+
+      <div class="popup popup-avatar">
+        <form name="popup" class="popup__form popup__form-avatar" novalidate>
+          <h2 class="popup__edit">Обновить аватар</h2>
+
+          <input
+            type="url"
+            placeholder="Ссылка на аватарку"
+            class="popup__filler popup__link-avatar"
+            id="popup__input-avatar"
+            required
+          />
+          <span class="popup__input-avatar-error popup__input-error"></span>
+          <button
+            type="submit"
+            name="profile-avatar"
+            class="popup__save popup__save-avatar"
+          >
+            Сохранить
+          </button>
+
+          <button type="button" class="popup__close"></button>
+        </form>
+      </div>
 
       <div class="popup popup-profile">
         <form name="popup" class="popup__form popup__form-profile" novalidate>
@@ -101,8 +126,7 @@
           <button
             type="submit"
             name="profile-name"
-            class="popup__save popup__save-card popup__save_inactive"
-            disabled
+            class="popup__save popup__save-card"
           >
             Сохранить
           </button>
@@ -124,7 +148,10 @@
           <img src="" alt="" class="element__photo" />
           <div class="element__container">
             <h2 class="element__name"></h2>
-            <button type="button" class="element__icon-heart"></button>
+            <div class="element__icon">
+              <button type="button" class="element__icon-heart"></button>
+              <div class="element__number-of-likes">0</div>
+            </div>
           </div>
           <button type="button" class="element__urn"></button>
         </article>

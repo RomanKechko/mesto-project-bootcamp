@@ -1,118 +1,106 @@
 import {
-  elements,
   elementTemplate,
-  popupLinkCard,
-  popupNameCard,
   popupPhoto,
   popupNamePhoto,
   popupMapEnlargement,
   popupProfile,
-  popupName,
-  popupDesription,
   profileName,
   profileDesription,
+  profileUrl,
+  elements,
+  popupAvatar,
   popupCard,
 } from "./const.js";
+import { openPopup, closePopup } from "./modal.js";
+import { deleteCard, addALike, removeALike } from "./api.js";
 
-/* Функции открыть/закрыть модалку */
-function openPopup(popup) {
-  popup.classList.add("popup_opened");
+/* установка карточки в начало */
+function addCard(data, profileId) {
+  const cardElement = createCard(data, profileId);
+  elements.prepend(cardElement);
+  closePopup(popupCard);
 }
+/* установка карточки в начало */
 
-function closePopup(popup) {
-  popup.classList.remove("popup_opened");
-}
-/* Функции открыть/закрыть модалку */
-
-/* Начало модального окна новой карточки */
-/* Функция с template */
-function createCard(nameInput, linkInput) {
+/* Огромная функция создания карточки */
+function createCard(data, profileId) {
+  /* беру template и клонирую внутренности*/
   const finiteElement = elementTemplate.content;
   const cardElement = finiteElement.querySelector(".element").cloneNode(true);
-  cardElement.querySelector(".element__name").textContent = nameInput;
-  cardElement.querySelector(".element__photo").src = linkInput;
-  cardElement.querySelector(".element__photo").alt = nameInput;
-  /* Функция с template */
+  /* беру template и клонирую внутренности*/
+  const likeButton = cardElement.querySelector(".element__icon-heart");
+  const numberOfLikes = cardElement.querySelector(".element__number-of-likes");
+
+  /* Подставляю в карточку данные с сервера */
+  cardElement.querySelector(".element__name").textContent = data.name;
+  cardElement.querySelector(".element__photo").src = data.link;
+  cardElement.querySelector(".element__photo").alt = data.name;
+  numberOfLikes.textContent = data.likes.length;
+  /* Подставляю в карточку данные с сервера */
 
   /* Кнопка лайк */
-  cardElement
-    .querySelector(".element__icon-heart") /*  */
-    .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("element__icon-heart_active");
-    });
+  likeButton.addEventListener("click", function (evt) {
+    evt.target.classList.toggle("element__icon-heart_active");
+
+    if (evt.target.classList.contains("element__icon-heart_active")) {
+      addALike(data._id).then((data) => {
+        numberOfLikes.textContent = data.likes.length;
+        console.log(addALike);
+      });
+    } else {
+      removeALike(data._id).then((data) => {
+        numberOfLikes.textContent = data.likes.length;
+      });
+    }
+  });
+  for (const like of data.likes) {
+    if (like._id === profileId) {
+      likeButton.classList.toggle("element__icon-heart_active");
+    }
+  }
   /* Кнопка лайк */
 
   /* Кнопка урны */
-  cardElement
-    .querySelector(".element__urn")
-    .addEventListener("click", function (evt) {
-      evt.target.parentNode.remove();
-    });
+  if (data.owner._id === profileId) {
+    cardElement
+      .querySelector(".element__urn")
+      .classList.add("element__urn_hidden");
+    cardElement
+      .querySelector(".element__urn")
+      .addEventListener("click", function (evt) {
+        deleteCard(data._id)
+          .then(() => {
+            evt.target.parentNode.remove();
+          })
+          .catch((err) => console.log(err));
+      });
+  }
   /* Кнопка урны */
 
   /* Увеличение карточки */
   cardElement.querySelector(".element__photo").addEventListener("click", () => {
     openPopup(popupMapEnlargement);
-    popupPhoto.src = linkInput;
-    popupPhoto.alt = nameInput;
-    popupNamePhoto.textContent = nameInput;
+    popupPhoto.src = data.link;
+    popupPhoto.alt = data.name;
+    popupNamePhoto.textContent = data.name;
   });
   /* Увеличение карточки */
+
   return cardElement;
 }
 
-/* Форма карточки */
-function addCard(evt) {
-  evt.preventDefault();
-  elements.prepend(createCard(popupNameCard.value, popupLinkCard.value));
-  evt.target.reset();
-  closePopup(popupCard);
-}
-/* Функция замены данных профиля */
-function editProfile(name, description) {
-  profileName.textContent = name;
-  profileDesription.textContent = description;
-}
-/* Функция замены данных профиля */
-
-/* Форма */
-function editProdile(evt) {
-  evt.preventDefault();
-  editProfile(popupName.value, popupDesription.value);
-
+/* Функция замены данных с сервера */
+function editProfile(data) {
+  profileName.textContent = data.name;
+  profileDesription.textContent = data.about;
   closePopup(popupProfile);
 }
-/* Начало 6ти готовых карточек */
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-initialCards.forEach(function (element) {
-  elements.prepend(createCard(element.name, element.link));
-});
+/* Функция замены данных с сервера */
 
-/* Клонирую элементы из массива и добавляю в картчоки */
-
-export { addCard, editProdile, openPopup, closePopup };
+/* Функция замены аватара с сервера */
+function avatarСhange(data) {
+  profileUrl.setAttribute("src", data.avatar);
+  closePopup(popupAvatar);
+}
+/* Функция замены аватара с сервера */
+export { createCard, editProfile, addCard, avatarСhange };
