@@ -1,3 +1,5 @@
+import { disabledButton } from "./utils";
+
 const showInputError = (formElement, element, errorMessage, config) => {
   const popupError = formElement.querySelector(`.${element.id}-error`);
   element.classList.add(config.inputErrorClass);
@@ -13,7 +15,7 @@ const hideInputError = (formElement, element, config) => {
   popupError.classList.remove(config.errorClass);
 };
 
-const isValid = (formElement, inputElement, config) => {
+const checkInput = (formElement, inputElement, config) => {
   if (!inputElement.validity.valid) {
     showInputError(
       formElement,
@@ -48,9 +50,14 @@ const setEventListeners = (formElement, config) => {
   );
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
 
+  /*  toggleButtonState(inputList, buttonElement, config);
+  formElement.addEventListener("reset", () => {
+    disabledButton(buttonElement, config);
+  }); */
+
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
-      isValid(formElement, inputElement, config);
+      checkInput(formElement, inputElement, config);
 
       toggleButtonState(inputList, buttonElement, config);
     });

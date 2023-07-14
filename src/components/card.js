@@ -28,57 +28,63 @@ function createCard(data, profileId) {
   const finiteElement = elementTemplate.content;
   const cardElement = finiteElement.querySelector(".element").cloneNode(true);
   /* беру template и клонирую внутренности*/
+  const elementPhoto = cardElement.querySelector(".element__photo");
   const likeButton = cardElement.querySelector(".element__icon-heart");
   const numberOfLikes = cardElement.querySelector(".element__number-of-likes");
+  const elementUrn = cardElement.querySelector(".element__urn");
 
   /* Подставляю в карточку данные с сервера */
   cardElement.querySelector(".element__name").textContent = data.name;
-  cardElement.querySelector(".element__photo").src = data.link;
-  cardElement.querySelector(".element__photo").alt = data.name;
+  elementPhoto.src = data.link;
+  elementPhoto.alt = data.name;
   numberOfLikes.textContent = data.likes.length;
   /* Подставляю в карточку данные с сервера */
 
   /* Кнопка лайк */
   likeButton.addEventListener("click", function (evt) {
-    evt.target.classList.toggle("element__icon-heart_active");
-
-    if (evt.target.classList.contains("element__icon-heart_active")) {
-      addALike(data._id).then((data) => {
-        numberOfLikes.textContent = data.likes.length;
-        console.log(addALike);
-      });
+    if (!evt.target.classList.contains("element__icon-heart_active")) {
+      addALike(data._id)
+        .then((data) => {
+          numberOfLikes.textContent = data.likes.length;
+          evt.target.classList.toggle("element__icon-heart_active");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      removeALike(data._id).then((data) => {
-        numberOfLikes.textContent = data.likes.length;
-      });
+      removeALike(data._id)
+        .then((data) => {
+          numberOfLikes.textContent = data.likes.length;
+          evt.target.classList.toggle("element__icon-heart_active");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   });
   for (const like of data.likes) {
     if (like._id === profileId) {
-      likeButton.classList.toggle("element__icon-heart_active");
+      likeButton.classList.add("element__icon-heart_active");
+      break;
     }
   }
   /* Кнопка лайк */
 
   /* Кнопка урны */
   if (data.owner._id === profileId) {
-    cardElement
-      .querySelector(".element__urn")
-      .classList.add("element__urn_hidden");
-    cardElement
-      .querySelector(".element__urn")
-      .addEventListener("click", function (evt) {
-        deleteCard(data._id)
-          .then(() => {
-            evt.target.parentNode.remove();
-          })
-          .catch((err) => console.log(err));
-      });
+    elementUrn.classList.add("element__urn_hidden");
+    elementUrn.addEventListener("click", function (evt) {
+      deleteCard(data._id)
+        .then(() => {
+          evt.target.closest(".element").remove();
+        })
+        .catch((err) => console.log(err));
+    });
   }
   /* Кнопка урны */
 
   /* Увеличение карточки */
-  cardElement.querySelector(".element__photo").addEventListener("click", () => {
+  elementPhoto.addEventListener("click", () => {
     openPopup(popupMapEnlargement);
     popupPhoto.src = data.link;
     popupPhoto.alt = data.name;
@@ -89,18 +95,4 @@ function createCard(data, profileId) {
   return cardElement;
 }
 
-/* Функция замены данных с сервера */
-function editProfile(data) {
-  profileName.textContent = data.name;
-  profileDesription.textContent = data.about;
-  closePopup(popupProfile);
-}
-/* Функция замены данных с сервера */
-
-/* Функция замены аватара с сервера */
-function avatarСhange(data) {
-  profileUrl.setAttribute("src", data.avatar);
-  closePopup(popupAvatar);
-}
-/* Функция замены аватара с сервера */
-export { createCard, editProfile, addCard, avatarСhange };
+export { createCard, addCard };

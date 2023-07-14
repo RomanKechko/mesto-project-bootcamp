@@ -6,7 +6,7 @@ function openPopup(popup) {
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  document.addEventListener("keydown", closeByEsc);
+  document.removeEventListener("keydown", closeByEsc);
 }
 /* Функции открыть/закрыть модалку */
 
@@ -21,10 +21,4 @@ function closeByEsc(evt) {
 }
 /* Закрыть на "Esc" */
 
-/* Блокировка кнкопки схранить в попап, где не введены данные */
-function buttonDisabled(button) {
-  button.classList.add("popup__save_inactive");
-  button.setAttribute("disabled", true);
-}
-/* Блокировка кнкопки схранить в попап, где не введены данные */
-export { openPopup, closePopup, buttonDisabled };
+export { openPopup, closePopup };

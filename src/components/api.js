@@ -1,3 +1,5 @@
+import { checkResponse } from "./utils.js";
+
 const config = {
   baseUrl: "https://nomoreparties.co/v1/wbf-cohort-10",
   headers: {
@@ -10,12 +12,7 @@ const config = {
 function getInitialCards() {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 /* Загрузка карточек с сервера */
 
@@ -28,24 +25,14 @@ function sendInitialedCards(name, link) {
       name: name,
       link: link,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return new Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 
 /* Данные профиля с сервера */
-function serverProfileData() {
+function getProfileData() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 /* Данные профиля с сервера */
 
@@ -58,12 +45,7 @@ function sendProfileData(name, about) {
       name: name,
       about: about,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    new Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 /* Отправка на сервер новых данных профиля */
 
@@ -75,12 +57,7 @@ function addAvatarToServer(avata) {
     body: JSON.stringify({
       avatar: avata,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    new Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 /* Отправка на сервер данных аватара */
 
@@ -89,12 +66,7 @@ function deleteCard(cardId) {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    new Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 /* Удаление карточки */
 
@@ -103,12 +75,7 @@ function addALike(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    new Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 /* Добавление лайка */
 
@@ -117,12 +84,7 @@ function removeALike(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    new Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 /* Удаление лайка */
 
@@ -130,7 +92,7 @@ export {
   getInitialCards,
   sendInitialedCards,
   sendProfileData,
-  serverProfileData,
+  getProfileData,
   addAvatarToServer,
   deleteCard,
   addALike,

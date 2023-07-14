@@ -24,24 +24,20 @@ import {
   profileUrl,
 } from "../components/const.js";
 import { enableValidation } from "../components/validate";
-import {
-  createCard,
-  editProfile,
-  addCard,
-  avatarСhange,
-} from "../components/card.js";
-import { openPopup, closePopup, buttonDisabled } from "../components/modal.js";
+import { createCard, addCard } from "../components/card.js";
+import { openPopup, closePopup } from "../components/modal.js";
 import {
   getInitialCards,
   sendInitialedCards,
   sendProfileData,
-  serverProfileData,
+  getProfileData,
   addAvatarToServer,
 } from "../components/api.js";
+import { disableButton, enableButton } from "../components/utils";
 
 /* Добавление карточек и профиля с сервера */
-Promise.all([getInitialCards(), serverProfileData()]).then(
-  ([cards, profile]) => {
+Promise.all([getInitialCards(), getProfileData()])
+  .then(([cards, profile]) => {
     cards.forEach((card) => {
       const cardElement = createCard(card, profile._id);
       elements.append(cardElement);
@@ -49,26 +45,31 @@ Promise.all([getInitialCards(), serverProfileData()]).then(
     profileName.textContent = profile.name;
     profileDesription.textContent = profile.about;
     profileUrl.setAttribute("src", profile.avatar);
+
     /* Форма добавления карточек */
     popupFormСard.addEventListener("submit", function (evt) {
       evt.preventDefault();
       saveButtons.saveCardButton.textContent = "Сохранение...";
-
+      disableButton(buttonCard); /* откл. кнопки сохр. */
       sendInitialedCards(popupNameCard.value, popupLinkCard.value)
         .then((data) => {
           addCard(data, profile._id);
+
+          evt.target.reset();
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
           saveButtons.saveCardButton.textContent = "Сохранить";
+          enableButton(buttonCard);
         });
-      evt.target.reset();
     });
     /* Форма добавления карточек */
-  }
-);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 /* Форма изменения профиля */
 popupFormProfile.addEventListener("submit", function (evt) {
   evt.preventDefault();
@@ -86,24 +87,41 @@ popupFormProfile.addEventListener("submit", function (evt) {
 });
 /* Форма изменения профиля */
 
+/* Функция замены данных с сервера */
+function editProfile(data) {
+  profileName.textContent = data.name;
+  profileDesription.textContent = data.about;
+  closePopup(popupProfile);
+}
+/* Функция замены данных с сервера */
+
 /* Форма изменения аватара */
 popupFormAvatar.addEventListener("submit", function (evt) {
   evt.preventDefault();
   saveButtons.saveAvatarButton.textContent = "Сохранение...";
-
+  disableButton(buttonAvatar); /* откл. кнопки сохр. */
   addAvatarToServer(popupLinkAvatar.value)
     .then((data) => {
-      avatarСhange(data);
+      changeAvatar(data);
+      evt.target.reset();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
       saveButtons.saveAvatarButton.textContent = "Сохранить";
+      enableButton(buttonAvatar);
     });
-  evt.target.reset();
 });
 /* Форма изменения аватара */
+
+/* Функция замены аватара с сервера */
+function changeAvatar(data) {
+  profileUrl.setAttribute("src", data.avatar);
+  closePopup(popupAvatar);
+}
+/* Функция замены аватара с сервера */
+
 /* Кнопка "закрыть модалку" для всех крестиков */
 closeButtons.forEach((button) => {
   const popup = button.closest(".popup");
@@ -113,8 +131,11 @@ closeButtons.forEach((button) => {
 
 /* Нажать вне модалки, чтобы закрыть ее*/
 popups.forEach((popup) => {
-  popup.addEventListener("click", (evt) => {
-    if (evt.target.classList.contains("popup")) {
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains("popup__close")) {
       closePopup(popup);
     }
   });
@@ -124,7 +145,7 @@ popups.forEach((popup) => {
 /* Открыть модальное окно карточек*/
 profileAddButton.addEventListener("click", () => {
   openPopup(popupCard);
-  buttonDisabled(buttonCard); /* откл. кнопки сохр. */
+  disableButton(buttonCard); /* откл. кнопки сохр. */
 });
 /* Открыть модальное окно карточек*/
 
@@ -139,7 +160,7 @@ profileEditButton.addEventListener("click", () => {
 /* Открываем модалку аватарки*/
 profileAvatarReplacementHidden.addEventListener("click", () => {
   openPopup(popupAvatar);
-  buttonDisabled(buttonAvatar); /* откл. кнопки сохр. */
+  disableButton(buttonAvatar); /* откл. кнопки сохр. */
 });
 /* Открываем модалку аватарки*/
 
